@@ -1,0 +1,15 @@
+[
+    {
+        "section": "Testing",
+        "criteria": [
+            {
+                "type": "checkbox",
+                "description": "Has tests"
+            },
+            {
+                "type": "multichoice",
+                "description": "Test quality"
+            }
+        ]
+    }
+]
