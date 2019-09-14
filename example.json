@@ -4,7 +4,15 @@
         "criteria": [
             {
                 "type": "checkbox",
-                "description": "Has tests"
+                "description": "Has unit tests"
+            },
+            {
+                "type": "checkbox",
+                "description": "Has integration tests"
+            },
+            {
+                "type": "multichoice",
+                "description": "Covers critical business logic"
             },
             {
                 "type": "multichoice",

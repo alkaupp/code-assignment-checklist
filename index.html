@@ -5,7 +5,11 @@
         function updateSection(sectionId) {
             const scoreDiv = document.getElementById(sectionId + '-score')
             const indicators = document.getElementsByClassName(sectionId);
-            scoreDiv.innerText = [...indicators].reduce((current, previous) => parseInt(current.innerText) + parseInt(previous.innerText)) / indicators.length + '%'
+            scoreDiv.innerText = parseInt(
+                [...indicators]
+                .map((indicator) => parseInt(indicator.innerText))
+                .reduce((accumulator, current) => accumulator + current)
+             / indicators.length ) + '%'
         }
         function checkBoxChecked(event) {
             const indicator = document.getElementById(event.name.split('-')[0] + '-indicator')
