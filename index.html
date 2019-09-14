@@ -17,31 +17,72 @@
             indicator.innerText = event.value
             updateSection(event.parentElement.parentElement.parentElement.id)
         }
+        function createHeader(sectionTitle, sectionId) {
+            const headerDiv = document.createElement('div')
+            headerDiv.innerHTML = `
+                <h3 style="display: inline-block">${sectionTitle}</h3>
+                <div style="display: inline-block" id="${sectionId}-score">0%</div>
+            `
+            return headerDiv
+        }
+        function createCheckBoxCriteria(description, sectionId, questionNumber) {
+            const checkBoxDiv = document.createElement('div')
+            checkBoxDiv.innerHTML = `
+                <div class="${sectionId}" style="display: inline-block" id="q${questionNumber}-indicator">0%</div>
+                <div style="display: inline-block">
+                    <label for="q${questionNumber}-input" id="q${questionNumber}-input-label">${description}</label>
+                    <input name="q${questionNumber}-input" type="checkbox" onclick="checkBoxChecked(this)"/>
+                </div>
+            `
+            return checkBoxDiv
+            
+        }
+        function createMultichoiceCriteria(description, sectionId, questionNumber) {
+            const multiChoiceDiv = document.createElement('div')
+            multiChoiceDiv.innerHTML = `
+                <div class="${sectionId}" style="display: inline-block" id="q${questionNumber}-indicator">0%</div>
+                <div style="display: inline-block">
+                    <label for="q${questionNumber}-input-1">${description}</label>
+                    <button name="q${questionNumber}-input-1" value="0%" onclick="multiSelectClicked(this)">-2</button>
+                    <button name="q${questionNumber}-input-2" value="33%" onclick="multiSelectClicked(this)">-1</button>
+                    <button name="q${questionNumber}-input-3" value="66%" onclick="multiSelectClicked(this)">1</button>
+                    <button name="q${questionNumber}-input-4" value="100%" onclick="multiSelectClicked(this)">2</button>
+                </div>
+            `
+            return multiChoiceDiv
+        }
+        function fileUpload(event) {
+            const fileInput = document.getElementById('fileinput')
+            const fileReader = new FileReader()
+            fileReader.onload = (event) => {
+                const checklist = JSON.parse(event.target.result)
+                const checkListDiv = document.getElementById('checklist')
+                let sectionCounter = 1
+                let questionCounter = 1
+                checklist.forEach((section) => {
+                    const sectionDiv = document.createElement('div')
+                    sectionDiv.id = 'section-' + sectionCounter
+                    checkListDiv.appendChild(sectionDiv)
+                    sectionDiv.appendChild(createHeader(section.section, sectionDiv.id))
+                    section.criteria.forEach((criteria) => {
+                        if (criteria.type === 'checkbox') {
+                            sectionDiv.appendChild(createCheckBoxCriteria(criteria.description, sectionDiv.id, questionCounter))
+                        }
+                        if (criteria.type === 'multichoice') {
+                            sectionDiv.appendChild(createMultichoiceCriteria(criteria.description, sectionDiv.id, questionCounter))
+                        }
+                        questionCounter++
+                    })
+                    sectionCounter++
+                })
+            }
+            fileReader.readAsText(fileInput.files.item(0))
+        }
         </script>
     </head>
     <body>
-        <div id="section-1">
-            <div>
-                <h3 style="display: inline-block">Testing</h3>
-                <div style="display: inline-block" id="section-1-score">0%</div>
-            </div>
-            <div>
-                <div class="section-1" style="display: inline-block" id="q1-indicator">0%</div>
-                <div style="display: inline-block">
-                    <label for="q1-input" id="q1-input-label">Has tests</label>
-                    <input name="q1-input" type="checkbox" onclick="checkBoxChecked(this)"/>
-                </div>
-            </div>
-            <div>
-                <div class="section-1" style="display: inline-block" id="q2-indicator">0%</div>
-                <div style="display: inline-block">
-                    <label for="q2-input-1">Test quality</label>
-                    <button name="q2-input-1" value="0%" onclick="multiSelectClicked(this)">-2</button>
-                    <button name="q2-input-2" value="33%" onclick="multiSelectClicked(this)">-1</button>
-                    <button name="q2-input-3" value="66%" onclick="multiSelectClicked(this)">1</button>
-                    <button name="q2-input-4" value="100%" onclick="multiSelectClicked(this)">2</button>
-                </div>
-            </div>
-        </div>
+        <input type="file" id="fileinput"/>
+        <button onclick="fileUpload(this)">Import</button>
+        <div id="checklist"></div>
     </body>
 </html>
