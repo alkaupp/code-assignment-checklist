@@ -19,5 +19,26 @@
                 "description": "Test quality"
             }
         ]
+    },
+    {
+        "section": "Code quality",
+        "criteria": [
+            {
+                "type": "multichoice",
+                "description": "Variable, method, class naming"
+            },
+            {
+                "type": "multichoice",
+                "description": "Finding correct abstractions"
+            },
+            {
+                "type": "multichoice",
+                "description": "Appropriate method length"
+            },
+            {
+                "type": "multichoice",
+                "description": "Separation of concerns"
+            }
+        ]
     }
 ]
