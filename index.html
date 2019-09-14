@@ -76,7 +76,7 @@
             `
             return multiChoiceDiv
         }
-        function fileUpload(event) {
+        function uploadFile(event) {
             const fileInput = document.getElementById('fileinput')
             const fileReader = new FileReader()
             fileReader.onload = (event) => {
@@ -86,11 +86,22 @@
             }
             fileReader.readAsText(fileInput.files.item(0))
         }
+        function createFeedback(event) {
+            const sections = [...document.getElementsByClassName('section')]
+            const totalScore = parseInt(
+                sections
+                    .map((section, index) => parseInt(document.getElementById('section-' + (index + 1) + '-score').innerText))
+                    .reduce((accumulator, current) => accumulator + current) / sections.length
+            ) + '%'
+            document.getElementById('feedback').innerHTML = `Totalscore: ${totalScore}`
+        }
         </script>
     </head>
     <body>
         <input type="file" id="fileinput"/>
-        <button onclick="fileUpload(this)">Import</button>
+        <button onclick="uploadFile(this)">Import</button>
         <div id="checklist"></div>
+        <button onclick="createFeedback(this)">Create feedback</button>
+        <div id="feedback"></div>
     </body>
 </html>
