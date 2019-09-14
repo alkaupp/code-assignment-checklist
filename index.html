@@ -17,6 +17,27 @@
             indicator.innerText = event.value
             updateSection(event.parentElement.parentElement.parentElement.id)
         }
+        function createCheckList(checkListData, rootElement) {
+            let sectionCounter = 1
+            let questionCounter = 1
+            checkListData.forEach((section) => {
+                const sectionDiv = document.createElement('div')
+                sectionDiv.className = 'section'
+                sectionDiv.id = 'section-' + sectionCounter
+                rootElement.appendChild(sectionDiv)
+                sectionDiv.appendChild(createHeader(section.section, sectionDiv.id))
+                section.criteria.forEach((criteria) => {
+                    if (criteria.type === 'checkbox') {
+                        sectionDiv.appendChild(createCheckBoxCriteria(criteria.description, sectionDiv.id, questionCounter))
+                    }
+                    if (criteria.type === 'multichoice') {
+                        sectionDiv.appendChild(createMultichoiceCriteria(criteria.description, sectionDiv.id, questionCounter))
+                    }
+                    questionCounter++
+                })
+                sectionCounter++
+            })
+        }
         function createHeader(sectionTitle, sectionId) {
             const headerDiv = document.createElement('div')
             headerDiv.innerHTML = `
@@ -57,24 +78,7 @@
             fileReader.onload = (event) => {
                 const checklist = JSON.parse(event.target.result)
                 const checkListDiv = document.getElementById('checklist')
-                let sectionCounter = 1
-                let questionCounter = 1
-                checklist.forEach((section) => {
-                    const sectionDiv = document.createElement('div')
-                    sectionDiv.id = 'section-' + sectionCounter
-                    checkListDiv.appendChild(sectionDiv)
-                    sectionDiv.appendChild(createHeader(section.section, sectionDiv.id))
-                    section.criteria.forEach((criteria) => {
-                        if (criteria.type === 'checkbox') {
-                            sectionDiv.appendChild(createCheckBoxCriteria(criteria.description, sectionDiv.id, questionCounter))
-                        }
-                        if (criteria.type === 'multichoice') {
-                            sectionDiv.appendChild(createMultichoiceCriteria(criteria.description, sectionDiv.id, questionCounter))
-                        }
-                        questionCounter++
-                    })
-                    sectionCounter++
-                })
+                createCheckList(checklist, checkListDiv)
             }
             fileReader.readAsText(fileInput.files.item(0))
         }
