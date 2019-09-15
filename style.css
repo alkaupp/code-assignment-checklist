@@ -1,0 +1,9 @@
+.container {
+    width: max-content;
+}
+.section {
+    border: 1px solid;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px;
+}

@@ -64,10 +64,10 @@ function createMultichoiceCriteria(description, sectionId, questionNumber) {
                 <div class="${sectionId}" style="display: inline-block" id="q${questionNumber}-indicator">0%</div>
                 <div style="display: inline-block">
                     <label for="q${questionNumber}-input-1">${description}</label>
-                    <button name="q${questionNumber}-input-1" value="0%" onclick="multiSelectClicked(this)">-2</button>
-                    <button name="q${questionNumber}-input-2" value="33%" onclick="multiSelectClicked(this)">-1</button>
-                    <button name="q${questionNumber}-input-3" value="66%" onclick="multiSelectClicked(this)">1</button>
-                    <button name="q${questionNumber}-input-4" value="100%" onclick="multiSelectClicked(this)">2</button>
+                    <button class="multichoice" name="q${questionNumber}-input-1" value="0%" onclick="multiSelectClicked(this)">-2</button>
+                    <button class="multichoice" name="q${questionNumber}-input-2" value="33%" onclick="multiSelectClicked(this)">-1</button>
+                    <button class="multichoice" name="q${questionNumber}-input-3" value="66%" onclick="multiSelectClicked(this)">1</button>
+                    <button class="multichoice" name="q${questionNumber}-input-4" value="100%" onclick="multiSelectClicked(this)">2</button>
                 </div>
             `
     return multiChoiceDiv

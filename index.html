@@ -2,12 +2,15 @@
     <meta charset="UTF-8"/>
     <head>
         <script type="application/javascript" src="index.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css"> 
     </head>
     <body>
-        <input type="file" id="fileinput"/>
-        <button onclick="uploadFile(this)">Import</button>
-        <div id="checklist"></div>
-        <button onclick="createFeedback(this)">Create feedback</button>
-        <div id="feedback"></div>
+        <div class="container">
+            <input type="file" id="fileinput" />
+            <button onclick="uploadFile(this)">Import</button>
+            <div id="checklist"></div>
+            <button onclick="createFeedback(this)">Create feedback</button>
+            <div id="feedback"></div>
+        </div>
     </body>
 </html>
