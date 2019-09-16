@@ -78,6 +78,7 @@ function uploadFile(event) {
     fileReader.onload = (event) => {
         const checklist = JSON.parse(event.target.result)
         const checkListDiv = document.getElementById('checklist')
+        checkListDiv.innerHTML = null
         createCheckList(checklist, checkListDiv)
     }
     fileReader.readAsText(fileInput.files.item(0))
@@ -89,5 +90,8 @@ function createFeedback(event) {
             .map((section, index) => parseInt(document.getElementById('section-' + (index + 1) + '-score').innerText))
             .reduce((accumulator, current) => accumulator + current) / sections.length
     ) + '%'
-    document.getElementById('feedback').innerHTML = `Totalscore: ${totalScore}`
+    const checkListDiv = document.getElementById('checklist')
+    checkListDiv.querySelectorAll('input').forEach((element) => element.parentNode.removeChild(element))
+    checkListDiv.querySelectorAll('button').forEach((element) => element.parentNode.removeChild(element))
+    document.getElementById('feedback').innerText = `Total score: ${totalScore}`
 }
