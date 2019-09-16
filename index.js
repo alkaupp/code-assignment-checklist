@@ -36,6 +36,11 @@ function createCheckList(checkListData, rootElement) {
             questionCounter++
         })
         sectionCounter++
+        const textArea = document.createElement('textarea')
+        textArea.rows = 10
+        textArea.cols = 75
+        textArea.style.resize = 'none'
+        sectionDiv.appendChild(textArea)
     })
 }
 function createHeader(sectionTitle, sectionId) {
@@ -93,5 +98,10 @@ function createFeedback(event) {
     const checkListDiv = document.getElementById('checklist')
     checkListDiv.querySelectorAll('input').forEach((element) => element.parentNode.removeChild(element))
     checkListDiv.querySelectorAll('button').forEach((element) => element.parentNode.removeChild(element))
+    checkListDiv.querySelectorAll('textarea').forEach((element) => {
+        const div = document.createElement('div')
+        div.innerText = element.value
+        element.parentNode.replaceChild(div, element) 
+    })
     document.getElementById('feedback').innerText = `Total score: ${totalScore}`
 }
